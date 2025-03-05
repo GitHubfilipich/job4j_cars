@@ -27,8 +27,10 @@ public class UserRepository {
             return user;
         } catch (Exception e) {
             session.getTransaction().rollback();
-            return null;
+        } finally {
+            session.close();
         }
+        return null;
     }
 
     /**
@@ -47,6 +49,8 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -64,6 +68,8 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -72,9 +78,10 @@ public class UserRepository {
      * @return список пользователей.
      */
     public List<User> findAllOrderById() {
-        Session session = sf.openSession();
-        Query<User> query = session.createQuery("from User ORDER BY id", User.class);
-        return query.list();
+        try (Session session = sf.openSession()) {
+            Query<User> query = session.createQuery("from User ORDER BY id", User.class);
+            return query.list();
+        }
     }
 
     /**
@@ -82,10 +89,11 @@ public class UserRepository {
      * @return пользователь.
      */
     public Optional<User> findById(int userId) {
-        Session session = sf.openSession();
-        Query<User> query = session.createQuery("from User WHERE id = :fId", User.class)
-                .setParameter("fId", userId);
-        return query.uniqueResultOptional();
+        try (Session session = sf.openSession()) {
+            return session.createQuery("from User WHERE id = :fId", User.class)
+                    .setParameter("fId", userId)
+                    .uniqueResultOptional();
+        }
     }
 
     /**
@@ -94,10 +102,11 @@ public class UserRepository {
      * @return список пользователей.
      */
     public List<User> findByLikeLogin(String key) {
-        Session session = sf.openSession();
-        Query<User> query = session.createQuery("from User WHERE login LIKE :key", User.class)
-                .setParameter("key", "%" + key + "%");
-        return query.list();
+        try (Session session = sf.openSession()) {
+            return session.createQuery("from User WHERE login LIKE :key", User.class)
+                    .setParameter("key", "%" + key + "%")
+                    .list();
+        }
     }
 
     /**
@@ -106,9 +115,10 @@ public class UserRepository {
      * @return Optional or user.
      */
     public Optional<User> findByLogin(String login) {
-        Session session = sf.openSession();
-        Query<User> query = session.createQuery("from User WHERE login = :fLogin", User.class)
-                .setParameter("fLogin", login);
-        return query.uniqueResultOptional();
+        try (Session session = sf.openSession()) {
+            return session.createQuery("from User WHERE login = :fLogin", User.class)
+                    .setParameter("fLogin", login)
+                    .uniqueResultOptional();
+        }
     }
 }
