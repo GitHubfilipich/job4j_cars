@@ -12,7 +12,7 @@ public class PriceHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    long before;
-    long after;
-    LocalDateTime created;
+    private long before;
+    private long after;
+    private LocalDateTime created;
 }
