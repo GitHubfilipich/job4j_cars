@@ -16,7 +16,7 @@ public class CarRepository {
     }
 
     public List<Car> findAll() {
-        return crudRepository.query("from Car", Car.class);
+        return crudRepository.query("SELECT DISTINCT c FROM Car c LEFT JOIN FETCH c.ownerships", Car.class);
     }
 
     public void delete(int id) {
