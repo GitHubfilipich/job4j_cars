@@ -1,14 +1,20 @@
 package ru.job4j.cars.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "auto_post")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +36,17 @@ public class Post {
             joinColumns = { @JoinColumn(name = "post_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
-    private List<User> participates;
+    private Set<User> participates;
 
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "auto_post_foto",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "foto_id")}
+    )
+    private Set<Foto> fotos = new HashSet<>();
 }
