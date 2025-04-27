@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import ru.job4j.cars.model.Model;
 import ru.job4j.cars.model.Post;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +18,7 @@ public class PostRepository {
     }
 
     public List<Post> findAll() {
-        return crudRepository.query("SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates LEFT JOIN FETCH p.fotos", Post.class);
+        return crudRepository.query("SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates LEFT JOIN FETCH p.photos", Post.class);
     }
 
     public void delete(int id) {
@@ -33,18 +31,18 @@ public class PostRepository {
     public List<Post> findLastDayPosts() {
 
         return crudRepository.query("SELECT DISTINCT p FROM Post p "
-                + "LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates LEFT JOIN FETCH p.fotos "
-                + "where p.created >= :lastDay", Post.class, Map.of("lastDay", LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0))));
+                + "LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates LEFT JOIN FETCH p.photos "
+                + "where p.created >= :lastDay", Post.class, Map.of("lastDay", LocalDateTime.now().minusHours(24)));
     }
 
-    public List<Post> findPostsWithFoto() {
+    public List<Post> findPostsWithPhoto() {
         return crudRepository.query("SELECT DISTINCT p FROM Post p "
-                + "LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates INNER JOIN FETCH p.fotos", Post.class);
+                + "LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates INNER JOIN FETCH p.photos", Post.class);
     }
 
     public List<Post> findPostsByModel(Model model) {
         return crudRepository.query("SELECT DISTINCT p FROM Post p "
-                + "LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates LEFT JOIN FETCH p.fotos "
+                + "LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates LEFT JOIN FETCH p.photos "
                 + "where p.car.model = :model", Post.class, Map.of("model", model));
     }
 }

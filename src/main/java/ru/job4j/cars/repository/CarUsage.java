@@ -26,7 +26,7 @@ public class CarUsage {
             printData(sf);
 
             var lastDayPosts = postRepository.findLastDayPosts();
-            var postsWithFoto = postRepository.findPostsWithFoto();
+            var postsWithPhoto = postRepository.findPostsWithPhoto();
 
             var model = modelRepository.findAll().get(0);
             var postsByModel = postRepository.findPostsByModel(model);
@@ -34,8 +34,8 @@ public class CarUsage {
             System.out.println("!!! findLastDayPosts !!!");
             lastDayPosts.forEach(System.out::println);
 
-            System.out.println("!!! findPostsWithFoto !!!");
-            postsWithFoto.forEach(System.out::println);
+            System.out.println("!!! findPostsWithPhoto !!!");
+            postsWithPhoto.forEach(System.out::println);
 
             System.out.println("!!! findPostsByModel(" + model.getName() + ") !!!");
             postsByModel.forEach(System.out::println);
@@ -51,7 +51,7 @@ public class CarUsage {
         var carRepository = new CarRepository(new CrudRepository(sf));
         var ownershipRepository = new OwnershipRepository(new CrudRepository(sf));
         var modelRepository = new ModelRepository(new CrudRepository(sf));
-        var fotoRepository = new FotoRepository(new CrudRepository(sf));
+        var photoRepository = new PhotoRepository(new CrudRepository(sf));
         var postRepository = new PostRepository(new CrudRepository(sf));
 
         System.out.println("!!! очистка таблиц !!!");
@@ -62,7 +62,7 @@ public class CarUsage {
         ownerRepository.findAll().forEach(owner -> ownerRepository.delete(owner.getId()));
         engineRepository.findAll().forEach(engine -> engineRepository.delete(engine.getId()));
         modelRepository.findAll().forEach(model -> modelRepository.delete(model.getId()));
-        fotoRepository.findAll().forEach(foto -> fotoRepository.delete(foto.getId()));
+        photoRepository.findAll().forEach(photo -> photoRepository.delete(photo.getId()));
     }
 
     private static void addData(SessionFactory sf) {
@@ -111,9 +111,9 @@ public class CarUsage {
         carRepository.create(car3);
 
         System.out.println("!!! заполнение Foto !!!");
-        var fotos = List.of(new Foto(0, "Foto1", "FilePath1"),
-                new Foto(0, "Foto2", "FilePath2"),
-                new Foto(0, "Foto3", "FilePath3"));
+        var fotos = List.of(new Photo(0, "Foto1", "FilePath1"),
+                new Photo(0, "Foto2", "FilePath2"),
+                new Photo(0, "Foto3", "FilePath3"));
 
         System.out.println("!!! заполнение Post !!!");
         var users = userRepository.findAllOrderById();
@@ -138,14 +138,14 @@ public class CarUsage {
         var carRepository = new CarRepository(new CrudRepository(sf));
         var ownershipRepository = new OwnershipRepository(new CrudRepository(sf));
         var modelRepository = new ModelRepository(new CrudRepository(sf));
-        var fotoRepository = new FotoRepository(new CrudRepository(sf));
+        var photoRepository = new PhotoRepository(new CrudRepository(sf));
         var postRepository = new PostRepository(new CrudRepository(sf));
 
         Map.of("1 !!! Engine !!!", engineRepository.findAll(),
                         "2 !!! Owner !!!", ownerRepository.findAll(),
                         "3 !!! Ownership !!!", ownershipRepository.findAll(),
                         "4 !!! Model !!!", modelRepository.findAll(),
-                        "5 !!! Foto !!!", fotoRepository.findAll(),
+                        "5 !!! Photo !!!", photoRepository.findAll(),
                         "6 !!! Car !!!", carRepository.findAll(),
                         "7 !!! Post !!!", postRepository.findAll())
                 .entrySet()

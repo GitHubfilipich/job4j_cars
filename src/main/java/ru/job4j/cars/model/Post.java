@@ -48,5 +48,5 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "foto_id")}
     )
-    private Set<Foto> fotos = new HashSet<>();
+    private Set<Photo> photos = new HashSet<>();
 }
