@@ -38,15 +38,18 @@ public class Post {
     )
     private Set<User> participates;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "auto_post_foto",
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "foto_id")}
     )
     private Set<Photo> photos = new HashSet<>();
+
+    private int price;
+    private  boolean actual;
 }

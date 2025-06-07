@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+@Repository
 @AllArgsConstructor
 public class CrudRepository {
     private final SessionFactory sf;
@@ -45,6 +47,10 @@ public class CrudRepository {
             return sq.uniqueResultOptional();
         };
         return tx(command);
+    }
+
+    public <T> Optional<T> optional(Function<Session, T> command) {
+        return Optional.ofNullable(tx(command));
     }
 
     public <T> List<T> query(String query, Class<T> cl) {

@@ -9,7 +9,15 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.job4j.cars.OwnerRepository;
+import ru.job4j.cars.OwnershipRepository;
 import ru.job4j.cars.model.*;
+import ru.job4j.cars.repository.car.SimpleCarRepository;
+import ru.job4j.cars.repository.engine.SimpleEngineRepository;
+import ru.job4j.cars.repository.model.SimpleModelRepository;
+import ru.job4j.cars.repository.photo.SimplePhotoRepository;
+import ru.job4j.cars.repository.post.SimplePostRepository;
+import ru.job4j.cars.repository.user.SimpleUserRepository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -22,9 +30,9 @@ class PostRepositoryTest {
 
     private static StandardServiceRegistry registry;
     private static SessionFactory sf;
-    private static PostRepository postRepository;
-    private static UserRepository userRepository;
-    private static CarRepository carRepository;
+    private static SimplePostRepository postRepository;
+    private static SimpleUserRepository userRepository;
+    private static SimpleCarRepository carRepository;
 
     @BeforeAll
     public static void init() {
@@ -32,9 +40,9 @@ class PostRepositoryTest {
                 .configure().build();
         sf = new MetadataSources(registry)
                 .buildMetadata().buildSessionFactory();
-        postRepository = new PostRepository(new CrudRepository(sf));
-        userRepository = new UserRepository(new CrudRepository(sf));
-        carRepository = new CarRepository(new CrudRepository(sf));
+        postRepository = new SimplePostRepository(new CrudRepository(sf));
+        userRepository = new SimpleUserRepository(new CrudRepository(sf));
+        carRepository = new SimpleCarRepository(new CrudRepository(sf));
     }
 
     @AfterAll
@@ -45,13 +53,13 @@ class PostRepositoryTest {
 
     @AfterEach
     public void clearData() {
-        var engineRepository = new EngineRepository(new CrudRepository(sf));
+        var engineRepository = new SimpleEngineRepository(new CrudRepository(sf));
         var ownerRepository = new OwnerRepository(new CrudRepository(sf));
-        var carRepository = new CarRepository(new CrudRepository(sf));
+        var carRepository = new SimpleCarRepository(new CrudRepository(sf));
         var ownershipRepository = new OwnershipRepository(new CrudRepository(sf));
-        var modelRepository = new ModelRepository(new CrudRepository(sf));
-        var photoRepository = new PhotoRepository(new CrudRepository(sf));
-        var postRepository = new PostRepository(new CrudRepository(sf));
+        var modelRepository = new SimpleModelRepository(new CrudRepository(sf));
+        var photoRepository = new SimplePhotoRepository(new CrudRepository(sf));
+        var postRepository = new SimplePostRepository(new CrudRepository(sf));
 
         carRepository.findAll().forEach(car -> car.getOwnerships().clear());
         ownershipRepository.findAll().forEach(ownership -> ownershipRepository.delete(ownership.getId()));

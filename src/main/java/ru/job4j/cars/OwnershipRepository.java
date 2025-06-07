@@ -1,7 +1,8 @@
-package ru.job4j.cars.repository;
+package ru.job4j.cars;
 
 import lombok.AllArgsConstructor;
 import ru.job4j.cars.model.Ownership;
+import ru.job4j.cars.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Map;

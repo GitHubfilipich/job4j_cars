@@ -19,4 +19,12 @@
     <include file="scripts/012_ddl_alter_car_table_add_column_model_id.sql" relativeToChangelogFile="true"/>
     <include file="scripts/013_ddl_create_foto_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/014_ddl_create_auto_post_foto_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/015_ddl_alter_auto_post_table_add_columns_price_actual.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/016_ddl_create_body_type_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/017_ddl_create_brand_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/018_ddl_create_gearbox_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/019_ddl_alter_car_table_add_columns_body_type_id_brand_id_gearbox_id_production_year_mileage_power_used.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/020_ddl_alter_auto_user_table_add_column_name.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/021_dml_insert_body_type_brand_engine_gearboxe_model_data.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/022_ddl_alter_car_alter_column_owner_id.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

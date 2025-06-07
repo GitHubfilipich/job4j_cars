@@ -1,12 +1,18 @@
-package ru.job4j.cars.repository;
+package ru.job4j.cars;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.job4j.cars.model.*;
+import ru.job4j.cars.repository.CrudRepository;
+import ru.job4j.cars.repository.car.SimpleCarRepository;
+import ru.job4j.cars.repository.engine.SimpleEngineRepository;
+import ru.job4j.cars.repository.model.SimpleModelRepository;
+import ru.job4j.cars.repository.photo.SimplePhotoRepository;
+import ru.job4j.cars.repository.post.SimplePostRepository;
+import ru.job4j.cars.repository.user.SimpleUserRepository;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class CarUsage {
@@ -16,8 +22,8 @@ public class CarUsage {
         try (SessionFactory sf = new MetadataSources(registry)
                 .buildMetadata().buildSessionFactory()) {
 
-            var postRepository = new PostRepository(new CrudRepository(sf));
-            var modelRepository = new ModelRepository(new CrudRepository(sf));
+            var postRepository = new SimplePostRepository(new CrudRepository(sf));
+            var modelRepository = new SimpleModelRepository(new CrudRepository(sf));
 
             clearData(sf);
 
@@ -46,13 +52,13 @@ public class CarUsage {
     }
 
     private static void clearData(SessionFactory sf) {
-        var engineRepository = new EngineRepository(new CrudRepository(sf));
+        var engineRepository = new SimpleEngineRepository(new CrudRepository(sf));
         var ownerRepository = new OwnerRepository(new CrudRepository(sf));
-        var carRepository = new CarRepository(new CrudRepository(sf));
+        var carRepository = new SimpleCarRepository(new CrudRepository(sf));
         var ownershipRepository = new OwnershipRepository(new CrudRepository(sf));
-        var modelRepository = new ModelRepository(new CrudRepository(sf));
-        var photoRepository = new PhotoRepository(new CrudRepository(sf));
-        var postRepository = new PostRepository(new CrudRepository(sf));
+        var modelRepository = new SimpleModelRepository(new CrudRepository(sf));
+        var photoRepository = new SimplePhotoRepository(new CrudRepository(sf));
+        var postRepository = new SimplePostRepository(new CrudRepository(sf));
 
         System.out.println("!!! очистка таблиц !!!");
         carRepository.findAll().forEach(car -> car.getOwnerships().clear());
@@ -66,9 +72,9 @@ public class CarUsage {
     }
 
     private static void addData(SessionFactory sf) {
-        var carRepository = new CarRepository(new CrudRepository(sf));
-        var postRepository = new PostRepository(new CrudRepository(sf));
-        var userRepository = new UserRepository(new CrudRepository(sf));
+        var carRepository = new SimpleCarRepository(new CrudRepository(sf));
+        var postRepository = new SimplePostRepository(new CrudRepository(sf));
+        var userRepository = new SimpleUserRepository(new CrudRepository(sf));
 
         System.out.println("!!! заполнение Engine !!!");
         var engines = List.of(new Engine(0, "Engine1"),
@@ -88,58 +94,16 @@ public class CarUsage {
                 new Model(0, "Model3"));
 
         System.out.println("!!! заполнение Car !!!");
-
-        var car1 = new Car(0, "Car1", engines.get(0), owners.get(0), new HashSet<>(), models.get(0));
-        car1.getOwnerships().add(new Ownership(0, owners.get(0), car1, LocalDateTime.of(2024, 1, 1, 10, 0),
-                LocalDateTime.of(2024, 6, 1, 10, 0)));
-        car1.getOwnerships().add(new Ownership(0, owners.get(1), car1, LocalDateTime.of(2024, 6, 1, 10, 0),
-                LocalDateTime.of(2025, 1, 1, 10, 0)));
-        car1.getOwnerships().add(new Ownership(0, owners.get(2), car1, LocalDateTime.of(2025, 1, 1, 10, 0),
-                null));
-        carRepository.create(car1);
-
-        var car2 = new Car(0, "Car2", engines.get(1), owners.get(3), new HashSet<>(), models.get(1));
-        car2.getOwnerships().add(new Ownership(0, owners.get(3), car2, LocalDateTime.of(2020, 1, 1, 10, 0),
-                null));
-
-        carRepository.create(car2);
-
-        var car3 = new Car(0, "Car3", engines.get(2), owners.get(4), new HashSet<>(), models.get(2));
-        car3.getOwnerships().add(new Ownership(0, owners.get(4), car3, LocalDateTime.of(2020, 1, 1, 10, 0),
-                null));
-
-        carRepository.create(car3);
-
-        System.out.println("!!! заполнение Foto !!!");
-        var fotos = List.of(new Photo(0, "Foto1", "FilePath1"),
-                new Photo(0, "Foto2", "FilePath2"),
-                new Photo(0, "Foto3", "FilePath3"));
-
-        System.out.println("!!! заполнение Post !!!");
-        var users = userRepository.findAllOrderById();
-
-        var post1 = new Post(0, "Description1", LocalDateTime.now(), users.get(0), new ArrayList<>(), new HashSet<>(),
-                car1, Set.of(fotos.get(0), fotos.get(1)));
-        postRepository.create(post1);
-
-        var post2 = new Post(0, "Description2", LocalDateTime.now(), users.get(1), new ArrayList<>(), new HashSet<>(),
-                car2, Set.of(fotos.get(2)));
-        postRepository.create(post2);
-
-        var post3 = new Post(0, "Description3", LocalDateTime.of(2025, 1, 1, 0, 0),
-                users.get(2), new ArrayList<>(), new HashSet<>(),
-                car3, new HashSet<>());
-        postRepository.create(post3);
     }
 
     private static void printData(SessionFactory sf) {
-        var engineRepository = new EngineRepository(new CrudRepository(sf));
+        var engineRepository = new SimpleEngineRepository(new CrudRepository(sf));
         var ownerRepository = new OwnerRepository(new CrudRepository(sf));
-        var carRepository = new CarRepository(new CrudRepository(sf));
+        var carRepository = new SimpleCarRepository(new CrudRepository(sf));
         var ownershipRepository = new OwnershipRepository(new CrudRepository(sf));
-        var modelRepository = new ModelRepository(new CrudRepository(sf));
-        var photoRepository = new PhotoRepository(new CrudRepository(sf));
-        var postRepository = new PostRepository(new CrudRepository(sf));
+        var modelRepository = new SimpleModelRepository(new CrudRepository(sf));
+        var photoRepository = new SimplePhotoRepository(new CrudRepository(sf));
+        var postRepository = new SimplePostRepository(new CrudRepository(sf));
 
         Map.of("1 !!! Engine !!!", engineRepository.findAll(),
                         "2 !!! Owner !!!", ownerRepository.findAll(),

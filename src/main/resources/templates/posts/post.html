@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/header :: header"></th:block>
+    <style>
+        .label-col {
+            width: 25%;
+        }
+        .value-col {
+            width: 75%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div th:if="${status != 'new' and status != 'edit'}"><h3>Объявление</h3></div>
+    <div th:if="${status == 'edit'}"><h3>Объявление (редактирование)</h3></div>
+    <div th:if="${status == 'new'}"><h3>Объявление (создание)</h3></div>
+    <form class="mt-3" th:action="@{/post/update}" method="post" th:object="${post}" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:field="*{id}">
+        <input type="hidden" name="userId" th:field="*{userId}">
+        <input type="hidden" name="carId" th:field="*{carId}">
+        <input type="hidden" name="created" th:field="*{created}">
+        <input type="hidden" name="status" th:value="${status}">
+        <div class="row mb-3" style="height: 100%;">
+            <div class="d-flex fs-4" th:if="${status != 'new' and status != 'edit'}">
+                <div class="w-50 mb-3 d-flex fw-bold">
+                    <div th:text="*{brand} + ' ' + *{model} + ', ' + *{productionYear}"></div>
+                </div>
+                <div class="w-50 mb-3 d-flex fw-bold">
+                    <div th:text="*{price} + ' ₽'"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="actual" class="form-label me-2"><b>В продаже:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{actual} ? 'да' : 'нет'" id="actual"
+                             th:if="${status != 'new' and status != 'edit'}"></div>
+                        <input class="form-check-input" type="checkbox" id="actualCheckbox" th:field="*{actual}"
+                               th:if="${status == 'new' or status == 'edit'}">
+                    </div>
+                </div>
+                <div class="mb-3 d-flex" th:if="${status == 'new' or status == 'edit'}">
+                    <div class="label-col">
+                        <label for="brandId" class="form-label me-2"><b>Марка:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <select id="brandId" name="brandId" th:field="*{brandId}" class="form-select field-70">
+                            <option th:each="brand : ${brands}"
+                                    th:value="${brand.id}"
+                                    th:text="${brand.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex" th:if="${status == 'new' or status == 'edit'}">
+                    <div class="label-col">
+                        <label for="modelId" class="form-label me-2"><b>Модель:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <select id="modelId" name="modelId" th:field="*{modelId}" class="form-select">
+                            <option th:each="model : ${models}"
+                                    th:value="${model.id}"
+                                    th:text="${model.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="productionYear" class="form-label me-2"><b>Год выпуска:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{productionYear}" id="productionYear"
+                             th:if="${status != 'new' and status != 'edit'}"></div>
+                        <input type="number" id="productionYearInput" th:field="*{productionYear}" class="form-control"
+                               th:if="${status == 'new' or status == 'edit'}">
+                    </div>
+                </div>
+                <div class="mb-3 d-flex" th:if="${status == 'new' or status == 'edit'}">
+                    <div class="label-col">
+                        <label for="price" class="form-label me-2"><b>Цена:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <input type="number" id="price" th:field="*{price}" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="mileage" class="form-label me-2"><b>Пробег:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{mileage}" id="mileage" th:if="${status != 'new' and status != 'edit'}"></div>
+                        <input type="number" id="mileageInput" th:field="*{mileage}" class="form-control"
+                               th:if="${status == 'new' or status == 'edit'}">
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="bodyType" class="form-label me-2"><b>Тип кузова:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{bodyType}" id="bodyType" th:if="${status != 'new' and status != 'edit'}"></div>
+                        <select id="bodyTypeId" name="bodyTypeId" th:field="*{bodyTypeId}" class="form-select"
+                                th:if="${status == 'new' or status == 'edit'}">
+                            <option th:each="bodyType : ${bodyTypes}"
+                                    th:value="${bodyType.id}"
+                                    th:text="${bodyType.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="engine" class="form-label me-2"><b>Двигатель:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{engine}" id="engine" th:if="${status != 'new' and status != 'edit'}"></div>
+                        <select id="engineId" name="engineId" th:field="*{engineId}" class="form-select"
+                                th:if="${status == 'new' or status == 'edit'}">
+                            <option th:each="engine : ${engines}"
+                                    th:value="${engine.id}"
+                                    th:text="${engine.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="power" class="form-label me-2"><b>Мощность:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{power}" id="power" th:if="${status != 'new' and status != 'edit'}"></div>
+                        <input type="number" id="powerInput" th:field="*{power}" class="form-control"
+                               th:if="${status == 'new' or status == 'edit'}">
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="gearbox" class="form-label me-2"><b>Коробка передач:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{gearbox}" id="gearbox" th:if="${status != 'new' and status != 'edit'}"></div>
+                        <select id="gearboxId" name="gearboxId" th:field="*{gearboxId}" class="form-select"
+                                th:if="${status == 'new' or status == 'edit'}">
+                            <option th:each="gearbox : ${gearboxes}"
+                                    th:value="${gearbox.id}"
+                                    th:text="${gearbox.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="used" class="form-label me-2"><b>Состояние:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{used} ? 'с пробегом' : 'новая'" id="used"
+                             th:if="${status != 'new' and status != 'edit'}"></div>
+                        <select id="usedSelect" name="usedSelect" th:field="*{used}" class="form-select"
+                                th:if="${status == 'new' or status == 'edit'}">
+                            <option th:value="true">с пробегом</option>
+                            <option th:value="false">новая</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex" th:if="${status != 'new'}">
+                    <div class="label-col">
+                        <label for="created" class="form-label me-2"><b>Опубликовано:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{created != null} ? *{created.format(T(java.time.format.DateTimeFormatter).ofPattern('dd MMMM yyyy HH:mm'))} : ''"
+                             id="created"></div>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="label-col">
+                        <label for="userName" class="form-label me-2"><b>Автор:</b></label>
+                    </div>
+                    <div class="value-col">
+                        <div th:text="*{userName}" id="userName"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex flex-column flex-wrap gap-2 overflow-auto" style="max-height: 100%;">
+                <div class="d-flex flex-wrap gap-2">
+                    <div th:each="filePath : *{filePaths}" style="flex: 0 0 48%;">
+                        <input type="hidden" name="filePaths" th:value="${filePath}"/>
+                        <img th:src="@{/files/{filePath}(filePath=${filePath})}" class="w-100" alt="No image">
+                    </div>
+                </div>
+                <div class="mb-3" th:if="${status == 'new' or status == 'edit'}">
+                    <label for="photos" class="form-label"><b>Добавить фото:</b></label>
+                    <input type="file" name="photos" id="photos" class="form-control" multiple>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label"><b>Описание</b></label>
+            <textarea class="form-control" id="description"
+                      name="description" th:field="*{description}"
+                      rows="3" placeholder="Описание автомобиля"
+                      th:attr="readonly=${status != 'new' and status != 'edit'}"></textarea>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-6">
+                <div class="row" th:if="${status != 'new' and status != 'edit' and user != null and post.userId == user.id}">
+                    <div class="col-4"><a class="btn btn-primary w-100" th:href="@{/post/edit/{id}(id=*{id})}">Редактировать</a></div>
+                    <div class="col-4"><a class="btn btn-danger w-100" th:href="@{/post/delete/{id}(id=*{id})}">Удалить</a></div>
+                </div>
+                <div class="row" th:if="${status == 'new' or status == 'edit'}">
+                    <div class="col-4"><button class="btn btn-primary w-100" type="submit">Сохранить</button></div>
+                    <div class="col-4"><a class="btn btn-danger w-100" th:href="@{/}">Отмена</a></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<div th:include="fragments/footer :: footer"></div>
+</html>

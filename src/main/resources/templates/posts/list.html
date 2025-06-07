@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:insert="fragments/header :: header"></head>
+<body>
+<div class="container mt-2">
+    <form th:action="@{/}" method="get" th:object="${filter}" class="mb-3">
+        <div class="mb-3">
+            <div class="btn-group w-50 d-flex" role="group">
+                <input type="radio" class="btn-check" name="used" value="" id="condAll" autocomplete="off"
+                       th:checked="*{used} == null">
+                <label class="btn btn-outline-primary w-100" for="condAll">Все</label>
+                <input type="radio" class="btn-check" th:field="*{used}" value="false" id="condNew" autocomplete="off">
+                <label class="btn btn-outline-primary w-100" for="condNew">Новые</label>
+                <input type="radio" class="btn-check" th:field="*{used}" value="true" id="condUsed" autocomplete="off">
+                <label class="btn btn-outline-primary w-100" for="condUsed">С пробегом</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select id="brandId" name="brandId" th:field="*{brandId}" class="form-select">
+                    <option value="">-- все марки --</option>
+                    <option th:each="brand : ${brands}"
+                            th:value="${brand.id}"
+                            th:text="${brand.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <select id="modelId" name="modelId" th:field="*{modelId}" class="form-select">
+                    <option value="">-- все модели --</option>
+                    <option th:each="model : ${models}"
+                            th:value="${model.id}"
+                            th:text="${model.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <select id="engineId" name="engineId" th:field="*{engineId}" class="form-select">
+                    <option value="">-- все двигатели --</option>
+                    <option th:each="engine : ${engines}"
+                            th:value="${engine.id}"
+                            th:text="${engine.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="actual" class="form-label me-1" style="white-space: nowrap;">В продаже:</label>
+                        <input class="form-check-input" type="checkbox" id="actual" th:field="*{actual}">
+                    </div>
+                    <div class="col">
+                        <label for="withPhoto" class="form-label me-1" style="white-space: nowrap;">С фото:</label>
+                        <input class="form-check-input" type="checkbox" id="withPhoto" th:field="*{withPhoto}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select id="bodyTypeId" name="bodyTypeId" th:field="*{bodyTypeId}" class="form-select">
+                    <option value="">-- все типы кузова --</option>
+                    <option th:each="bodyType : ${bodyTypes}"
+                            th:value="${bodyType.id}"
+                            th:text="${bodyType.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <select id="gearboxId" name="gearboxId" th:field="*{gearboxId}" class="form-select">
+                    <option value="">-- все коробки передач --</option>
+                    <option th:each="gearbox : ${gearboxes}"
+                            th:value="${gearbox.id}"
+                            th:text="${gearbox.name}">
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <div class="d-flex align-items-center mb-3">
+                    <label for="powerMin" class="form-label me-2  me-2 mb-0" style="white-space: nowrap;">Мощность от:</label>
+                    <input type="number" min="0" id="powerMin" th:field="*{powerMin}" class="form-control flex-grow-1">
+                </div>
+            </div>
+            <div class="col">
+                <div class="d-flex align-items-center mb-3">
+                    <label for="powerMax" class="form-label me-2  me-2 mb-0" style="white-space: nowrap;">Мощность до:</label>
+                    <input type="number" min="0" id="powerMax" th:field="*{powerMax}" class="form-control flex-grow-1">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="d-flex align-items-center mb-3">
+                    <label for="productionYearMin" class="form-label me-2  me-2 mb-0" style="white-space: nowrap;">Год выпуска от:</label>
+                    <input type="number" min="0" id="productionYearMin" th:field="*{productionYearMin}" class="form-control flex-grow-1">
+                </div>
+            </div>
+            <div class="col">
+                <div class="d-flex align-items-center mb-3">
+                    <label for="productionYearMax" class="form-label me-2  me-2 mb-0" style="white-space: nowrap;">Год выпуска до:</label>
+                    <input type="number" min="0" id="productionYearMax" th:field="*{productionYearMax}" class="form-control flex-grow-1">
+                </div>
+            </div>
+            <div class="col">
+                <div class="d-flex align-items-center mb-3">
+                    <label for="priceMin" class="form-label me-2  me-2 mb-0" style="white-space: nowrap;">Цена от:</label>
+                    <input type="number" min="0" id="priceMin" th:field="*{priceMin}" class="form-control flex-grow-1">
+                </div>
+            </div>
+            <div class="col">
+                <div class="d-flex align-items-center mb-3">
+                    <label for="priceMax" class="form-label me-2  me-2 mb-0" style="white-space: nowrap;">Цена до:</label>
+                    <input type="number" min="0" id="priceMax" th:field="*{priceMax}" class="form-control flex-grow-1">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select id="sortType" name="sortType" th:field="*{sortType}" class="form-select">
+                    <option value="">-- без сортировки --</option>
+                    <option th:each="sortType : ${sortTypes}"
+                            th:value="${sortType}"
+                            th:text="${sortType.displayName}">
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <select id="postingPeriod" name="postingPeriod" th:field="*{postingPeriod}" class="form-select">
+                    <option value="">-- за всё время --</option>
+                    <option th:each="postingPeriod : ${postingPeriods}"
+                            th:value="${postingPeriod}"
+                            th:text="${postingPeriod.displayName}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success w-100">Показать объявления</button>
+        </div>
+    </form>
+
+
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Модель</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Пробег</th>
+                <th scope="col">Год выпуска</th>
+                <th scope="col">Двигатель</th>
+                <th scope="col">В продаже</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post: ${posts}">
+                <td><a th:text="${post.brand} + ' ' + ${post.model}" th:href="@{/post/{postId}(postId=${post.id})}"></a></td>
+                <td th:text="${post.price}"/>
+                <td th:text="${post.mileage}"/>
+                <td th:text="${post.productionYear}"/>
+                <td th:text="${post.engine} + ' ' + ${post.gearbox}"/>
+                <td th:text="${post.actual != null and post.actual == true} ? 'да' : ''"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<div th:include="fragments/footer :: footer"></div>
+</html>
