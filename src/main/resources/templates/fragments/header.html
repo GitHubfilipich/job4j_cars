@@ -19,7 +19,7 @@
                    th:href="@{/}">Объявления</a>
 
                 <a th:class="${status == 'new'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                   th:href="@{/add}">Разместить новое объявление</a>
+                   th:href="@{/add}" th:if="${user != null}">Разместить новое объявление</a>
             </div>
             <div class="d-flex ms-auto" th:if="${user == null}">
                 <a class="nav-link text-secondary me-3" th:href="@{/users/register}">Регистрация</a>

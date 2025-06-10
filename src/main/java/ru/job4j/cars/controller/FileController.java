@@ -18,7 +18,7 @@ public class FileController {
     private final PhotoService photoService;
 
     @GetMapping("/{filePath}")
-    public ResponseEntity<?> getById(@PathVariable String filePath) {
+    public ResponseEntity<?> getByFilePath(@PathVariable String filePath) {
         Optional<FileDto> file = photoService.findFileDtoByFilePath(filePath);
         if (file.isEmpty()) {
             return ResponseEntity.notFound().build();

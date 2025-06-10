@@ -11,11 +11,6 @@ import ru.job4j.cars.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TimeZone;
 
 @Controller
 @RequestMapping("/users")
@@ -66,6 +61,6 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/users/login";
+        return "redirect:/";
     }
 }
