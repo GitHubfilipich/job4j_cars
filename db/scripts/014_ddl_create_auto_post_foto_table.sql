@@ -1,7 +1,7 @@
-create table auto_post_foto
+CREATE TABLE auto_post_foto
 (
-    id      serial primary key,
-    post_id int not null REFERENCES auto_post(id),
-    foto_id int not null REFERENCES foto(id),
+    id      SERIAL PRIMARY KEY,
+    post_id INT NOT NULL REFERENCES auto_post(id),
+    foto_id INT NOT NULL REFERENCES foto(id),
     UNIQUE (post_id, foto_id)
 );

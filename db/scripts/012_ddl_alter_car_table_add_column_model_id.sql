@@ -1,1 +1,1 @@
-ALTER TABLE car ADD COLUMN model_id int REFERENCES model(id);
+ALTER TABLE car ADD COLUMN model_id INT REFERENCES model(id);

@@ -1,1 +1,1 @@
-ALTER TABLE auto_post ADD COLUMN car_id int REFERENCES car(id);
+ALTER TABLE auto_post ADD COLUMN car_id INT REFERENCES car(id);

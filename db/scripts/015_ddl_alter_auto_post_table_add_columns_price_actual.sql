@@ -1,2 +1,2 @@
-ALTER TABLE auto_post ADD COLUMN price int;
-ALTER TABLE auto_post ADD COLUMN actual boolean;
+ALTER TABLE auto_post ADD COLUMN price INT;
+ALTER TABLE auto_post ADD COLUMN actual BOOLEAN;

@@ -1,7 +1,7 @@
-create table car
+CREATE TABLE car
 (
-    id          serial primary key,
-    name        varchar not null,
-    engine_id   int not null references engine(id),
-    owner_id    int not null references owner(id)
+    id        SERIAL PRIMARY KEY,
+    name      VARCHAR NOT NULL,
+    engine_id INT NOT NULL REFERENCES engine(id),
+    owner_id  INT NOT NULL REFERENCES owner(id)
 );

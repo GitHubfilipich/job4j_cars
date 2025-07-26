@@ -1,5 +1,4 @@
-create table brand
-(
-    id          serial primary key,
-    name        varchar not null
+CREATE TABLE brand (
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
 );

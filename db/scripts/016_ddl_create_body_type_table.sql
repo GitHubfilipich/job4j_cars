@@ -1,5 +1,4 @@
-create table body_type
-(
-    id          serial primary key,
-    name        varchar not null
+CREATE TABLE body_type (
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
 );

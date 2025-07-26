@@ -1,6 +1,6 @@
-create table foto
+CREATE TABLE foto
 (
-    id          serial primary key,
-    name        varchar not null,
-    file_path   varchar unique not null
+    id        SERIAL PRIMARY KEY,
+    name      VARCHAR NOT NULL,
+    file_path VARCHAR UNIQUE NOT NULL
 );

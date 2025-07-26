@@ -1,5 +1,5 @@
-create table model
+CREATE TABLE model
 (
-    id          serial primary key,
-    name        varchar not null
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
 );
