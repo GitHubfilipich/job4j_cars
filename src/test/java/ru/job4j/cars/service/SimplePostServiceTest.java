@@ -89,9 +89,10 @@ class SimplePostServiceTest {
     private static List<Post> getPosts(int count) {
         var posts = new ArrayList<Post>();
         for (int i = 0; i < count; i++) {
-            var car = new Car(count, "brand" + count + " " + "model" + count, new Engine(count, "engine" + count), null, Set.of(),
-                    new Model(count, "model" + count), new BodyType(count, "bodytype" + count), new Brand(count, "brand" + count),
-                    new Gearbox(count, "gearbox" + count), 2020 + count, 10000 + count, 150 + count, count % 2 != 0);
+            var car = new Car(count, "brand" + count + " " + "model" + count, new Engine(count, "engine" + count),
+                    null, Set.of(), new Model(count, "model" + count), new BodyType(count, "bodytype" + count),
+                    new Brand(count, "brand" + count), new Gearbox(count, "gearbox" + count), 2020 + count,
+                    10000 + count, 150 + count, count % 2 != 0);
             var user = new User(count, "login" + count, "password" + count, "name" + count);
             var post = new Post(count, "desc" + count, LocalDateTime.now().minusDays(count - 1), user, List.of(),
                     Set.of(), car, Set.of(), 100 + count, count % 2 != 0);
@@ -166,9 +167,13 @@ class SimplePostServiceTest {
     }
 
     private static PostDTO getPostDTO(Post post) {
-        return new PostDTO(post.getId(), post.getUser().getId(), post.getUser().getName(), post.getDescription(), post.getCar().getId(), post.getCar().getBodyType().getId(),
-                post.getCar().getBodyType().getName(), post.getCar().getId(), post.getCar().getBrand().getName(), post.getCar().getModel().getId(), post.getCar().getModel().getName(), post.getCar().getEngine().getId(),
-                post.getCar().getEngine().getName(), post.getCar().getGearbox().getId(), post.getCar().getGearbox().getName(), post.getCar().getProductionYear(), post.getPrice(), post.getCar().getMileage(),
+        return new PostDTO(post.getId(), post.getUser().getId(), post.getUser().getName(), post.getDescription(),
+                post.getCar().getId(), post.getCar().getBodyType().getId(),
+                post.getCar().getBodyType().getName(), post.getCar().getId(), post.getCar().getBrand().getName(),
+                post.getCar().getModel().getId(), post.getCar().getModel().getName(),
+                post.getCar().getEngine().getId(), post.getCar().getEngine().getName(),
+                post.getCar().getGearbox().getId(), post.getCar().getGearbox().getName(),
+                post.getCar().getProductionYear(), post.getPrice(), post.getCar().getMileage(),
                 post.getCar().getPower(), post.isActual(), post.getCar().isUsed(), Set.of(), post.getCreated());
     }
 
@@ -210,7 +215,8 @@ class SimplePostServiceTest {
 
         assertThat(updated).isTrue();
         assertThat(updatedPost).usingRecursiveComparison()
-                .withComparatorForType(Comparator.comparing(a -> a.truncatedTo(ChronoUnit.SECONDS)), LocalDateTime.class)
+                .withComparatorForType(
+                        Comparator.comparing(a -> a.truncatedTo(ChronoUnit.SECONDS)), LocalDateTime.class)
                 .isEqualTo(post);
     }
 
@@ -245,7 +251,8 @@ class SimplePostServiceTest {
 
         assertThat(actual).isPresent();
         assertThat(actual.get()).usingRecursiveComparison()
-                .withComparatorForType(Comparator.comparing(a -> a.truncatedTo(ChronoUnit.SECONDS)), LocalDateTime.class)
+                .withComparatorForType(
+                        Comparator.comparing(a -> a.truncatedTo(ChronoUnit.SECONDS)), LocalDateTime.class)
                 .isEqualTo(postDTO);
         assertThat(actualId).isEqualTo(post.getId());
     }

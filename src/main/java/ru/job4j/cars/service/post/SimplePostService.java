@@ -192,11 +192,14 @@ public class SimplePostService implements PostService {
         }
         if (photos != null) {
             photos.forEach(multipartFile -> {
-                        if (multipartFile != null && multipartFile.getOriginalFilename() != null && !multipartFile.getOriginalFilename().isBlank()) {
-                            String fileName = UUID.randomUUID() + "_" + Paths.get(multipartFile.getOriginalFilename()).getFileName().toString();
+                        if (multipartFile != null && multipartFile.getOriginalFilename() != null
+                                && !multipartFile.getOriginalFilename().isBlank()) {
+                            String fileName = UUID.randomUUID() + "_"
+                                    + Paths.get(multipartFile.getOriginalFilename()).getFileName().toString();
                             Path filePath = Paths.get("files", fileName);
                             try {
-                                Files.copy(multipartFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+                                Files.copy(multipartFile.getInputStream(), filePath,
+                                        StandardCopyOption.REPLACE_EXISTING);
                                 Photo photo = new Photo(0, multipartFile.getName(), fileName);
                                 photoService.save(photo);
                                 postPhotos.add(photo);
@@ -207,7 +210,14 @@ public class SimplePostService implements PostService {
                     }
             );
         }
-        Car car = new Car(post.getCarId(), post.getBrand() + " " + post.getModel(), engineService.findById(post.getEngineId()).orElse(null), null, Set.of(), modelService.findById(post.getModelId()).orElse(null), bodyTypeService.findById(post.getBodyTypeId()).orElse(null), brandService.findById(post.getBrandId()).orElse(null), gearboxService.findById(post.getGearboxId()).orElse(null), post.getProductionYear(), post.getMileage(), post.getPower(), post.isUsed());
-        return new Post(post.getId(), post.getDescription(), LocalDateTime.now(), userService.findById(post.getUserId()).orElse(null), new ArrayList<>(), Set.of(), car, postPhotos, post.getPrice(), post.isActual());
+        Car car = new Car(post.getCarId(), post.getBrand() + " " + post.getModel(), engineService.findById(
+                post.getEngineId()).orElse(null), null, Set.of(), modelService.findById(
+                        post.getModelId()).orElse(null), bodyTypeService.findById(post.getBodyTypeId()).orElse(null),
+                brandService.findById(post.getBrandId()).orElse(null), gearboxService.findById(
+                        post.getGearboxId()).orElse(null), post.getProductionYear(), post.getMileage(),
+                post.getPower(), post.isUsed());
+        return new Post(post.getId(), post.getDescription(), LocalDateTime.now(),
+                userService.findById(post.getUserId()).orElse(null), new ArrayList<>(), Set.of(), car, postPhotos,
+                post.getPrice(), post.isActual());
     }
 }

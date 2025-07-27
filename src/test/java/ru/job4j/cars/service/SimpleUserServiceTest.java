@@ -60,7 +60,8 @@ class SimpleUserServiceTest {
         var user = new User(1, "login", "password", "name");
         var stringLoginCaptor = ArgumentCaptor.forClass(String.class);
         var stringPasswordCaptor = ArgumentCaptor.forClass(String.class);
-        when(userRepository.findByLoginAndPassword(stringLoginCaptor.capture(), stringPasswordCaptor.capture())).thenReturn(Optional.of(user));
+        when(userRepository.findByLoginAndPassword(stringLoginCaptor.capture(),
+                stringPasswordCaptor.capture())).thenReturn(Optional.of(user));
 
         var result = userService.findByLoginAndPassword(user.getLogin(), user.getPassword());
         var login = stringLoginCaptor.getValue();

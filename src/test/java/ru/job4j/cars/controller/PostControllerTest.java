@@ -55,14 +55,26 @@ class PostControllerTest {
         this.postController = new PostController(
                 bodyTypeService, brandService, engineService, gearboxService, modelService, postService);
 
-        bodyTypes = List.of(new BodyType(1, "Sedan"), new BodyType(2, "Hatchback"), new BodyType(3, "SUV"));
-        brands = List.of(new Brand(1, "Toyota"), new Brand(2, "Honda"), new Brand(3, "Ford"));
-        engines = List.of(new Engine(1, "Petrol"), new Engine(2, "Diesel"), new Engine(3, "Hybrid"));
-        gearboxes = List.of(new Gearbox(1, "Automatic"), new Gearbox(2, "Manual"), new Gearbox(3, "Robotic"));
-        models = List.of(new ru.job4j.cars.model.Model(1, "Camry"), new ru.job4j.cars.model.Model(2, "Civic"), new ru.job4j.cars.model.Model(3, "Focus"));
-        posts = List.of(new PostDTO(1, 101, "testUser1", "Отличный автомобиль в идеальном состоянии", 201, 1, "Седан", 1, "Toyota", 1, "Camry", 1, "Бензин 2.0L", 1, "Автомат", 2020, 2500000, 35000, 150, true, true, null, LocalDateTime.now().minusDays(1)),
-                new PostDTO(2, 102, "autoDealer", "Продажа нового автомобиля из салона", 202, 2, "Внедорожник", 2, "Honda", 2, "CR-V", 2, "Дизель 2.2L", 2, "Робот", 2023, 3500000, 100, 190, true, false, null, LocalDateTime.now().minusHours(5)),
-                new PostDTO(3, 103, "carEnthusiast", "Редкий экземпляр в отличном состоянии", 203, 3, "Купе", 3, "BMW", 3, "M4", 3, "Бензин 3.0L Twin-Turbo", 3, "Робот", 2019, 4500000, 75000, 431, true, true, null, LocalDateTime.now().minusDays(3)));
+        bodyTypes = List.of(new BodyType(1, "Sedan"), new BodyType(2, "Hatchback"),
+                new BodyType(3, "SUV"));
+        brands = List.of(new Brand(1, "Toyota"), new Brand(2, "Honda"),
+                new Brand(3, "Ford"));
+        engines = List.of(new Engine(1, "Petrol"), new Engine(2, "Diesel"),
+                new Engine(3, "Hybrid"));
+        gearboxes = List.of(new Gearbox(1, "Automatic"), new Gearbox(2, "Manual"),
+                new Gearbox(3, "Robotic"));
+        models = List.of(new ru.job4j.cars.model.Model(1, "Camry"),
+                new ru.job4j.cars.model.Model(2, "Civic"),
+                new ru.job4j.cars.model.Model(3, "Focus"));
+        posts = List.of(new PostDTO(1, 101, "testUser1", "Отличный автомобиль в идеальном состоянии",
+                        201, 1, "Седан", 1, "Toyota", 1, "Camry", 1, "Бензин 2.0L", 1, "Автомат", 2020, 2500000,
+                        35000, 150, true, true, null, LocalDateTime.now().minusDays(1)),
+                new PostDTO(2, 102, "autoDealer", "Продажа нового автомобиля из салона", 202, 2, "Внедорожник", 2,
+                        "Honda", 2, "CR-V", 2, "Дизель 2.2L", 2, "Робот", 2023, 3500000, 100, 190, true, false, null,
+                        LocalDateTime.now().minusHours(5)),
+                new PostDTO(3, 103, "carEnthusiast", "Редкий экземпляр в отличном состоянии", 203, 3, "Купе", 3,
+                        "BMW", 3, "M4", 3, "Бензин 3.0L Twin-Turbo", 3, "Робот", 2019, 4500000, 75000, 431, true,
+                        true, null, LocalDateTime.now().minusDays(3)));
     }
 
     /**

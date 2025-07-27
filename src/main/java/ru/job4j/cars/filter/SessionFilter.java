@@ -16,7 +16,8 @@ import java.io.IOException;
 public class SessionFilter extends HttpFilter {
 
     @Override
-    protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
         addUserToSession(request);
         chain.doFilter(request, response);
     }

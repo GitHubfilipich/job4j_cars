@@ -78,7 +78,8 @@ class SimplePostRepositoryTest {
         BodyType bodyType = saveBodyType("Body_" + name);
         Brand brand = saveBrand("Brand_" + name);
         Gearbox gearbox = saveGearbox("Gearbox_" + name);
-        Car car = new Car(0, name, engine, owner, new HashSet<>(), model, bodyType, brand, gearbox, 2020, 10000, 100, false);
+        Car car = new Car(0, name, engine, owner, new HashSet<>(), model, bodyType, brand, gearbox, 2020, 10000,
+                100, false);
         return car;
     }
 
@@ -323,7 +324,8 @@ class SimplePostRepositoryTest {
         Set<Photo> photos = new HashSet<>();
         photos.add(photo);
         List<PriceHistory> priceHistory = new ArrayList<>();
-        Post post = new Post(0, "desc_save", LocalDateTime.now(), user, priceHistory, participates, car, photos, 1200, true);
+        Post post = new Post(0, "desc_save", LocalDateTime.now(), user, priceHistory, participates, car, photos,
+                1200, true);
 
         boolean saved = postRepository.save(post);
 

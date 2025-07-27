@@ -28,7 +28,8 @@ public class PostController {
     private final ModelService modelService;
     private final PostService postService;
 
-    public PostController(BodyTypeService bodyTypeService, BrandService brandService, EngineService engineService, GearboxService gearboxService, ModelService modelService, PostService postService) {
+    public PostController(BodyTypeService bodyTypeService, BrandService brandService, EngineService engineService,
+                          GearboxService gearboxService, ModelService modelService, PostService postService) {
         this.bodyTypeService = bodyTypeService;
         this.brandService = brandService;
         this.engineService = engineService;
@@ -91,7 +92,8 @@ public class PostController {
     }
 
     @PostMapping("/post/update")
-    public String saveOrUpdate(@ModelAttribute PostDTO post, @RequestParam("status") String status, @RequestParam("photos") List<MultipartFile> photos, Model model) {
+    public String saveOrUpdate(@ModelAttribute PostDTO post, @RequestParam("status") String status,
+                               @RequestParam("photos") List<MultipartFile> photos, Model model) {
         if ("new".equals(status)) {
             post.setCreated(LocalDateTime.now());
             return save(post, model, photos);

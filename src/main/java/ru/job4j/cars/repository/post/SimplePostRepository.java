@@ -3,8 +3,6 @@ package ru.job4j.cars.repository.post;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-import ru.job4j.cars.model.BodyType;
-import ru.job4j.cars.model.Engine;
 import ru.job4j.cars.model.Model;
 import ru.job4j.cars.model.Post;
 import ru.job4j.cars.repository.CrudRepository;
@@ -29,7 +27,8 @@ public class SimplePostRepository implements PostRepository {
     @Override
     public List<Post> findAll() {
         try {
-            return crudRepository.query("SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates LEFT JOIN FETCH p.photos", Post.class);
+            return crudRepository.query("SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.priceHistory "
+                    + "LEFT JOIN FETCH p.participates LEFT JOIN FETCH p.photos", Post.class);
         } catch (Exception e) {
             log.error("Ошибка получения объявлений", e);
         }
@@ -63,7 +62,8 @@ public class SimplePostRepository implements PostRepository {
     @Override
     public List<Post> findPostsWithPhoto() {
         return crudRepository.query("SELECT DISTINCT p FROM Post p "
-                + "LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates INNER JOIN FETCH p.photos", Post.class);
+                + "LEFT JOIN FETCH p.priceHistory LEFT JOIN FETCH p.participates INNER JOIN FETCH p.photos",
+                Post.class);
     }
 
     @Override
