@@ -27,4 +27,5 @@
     <include file="scripts/020_ddl_alter_auto_user_table_add_column_name.sql" relativeToChangelogFile="true"/>
     <include file="scripts/021_dml_insert_body_type_brand_engine_gearboxe_model_data.sql" relativeToChangelogFile="true"/>
     <include file="scripts/022_ddl_alter_car_alter_column_owner_id.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/023_ddl_alter_tables_add_indexes.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
