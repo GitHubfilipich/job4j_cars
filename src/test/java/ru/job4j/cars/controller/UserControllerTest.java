@@ -1,5 +1,6 @@
 package ru.job4j.cars.controller;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -55,7 +56,7 @@ class UserControllerTest {
     void whenRegisterThenGetPageAndSessionAttribute() {
         var user = new User(0, "testLogin", "testPassword", "testName");
         var userArgumentCaptor = ArgumentCaptor.forClass(User.class);
-        when(userService.save(userArgumentCaptor.capture())).thenReturn(true);
+        when(userService.save(userArgumentCaptor.capture())).thenReturn(user);
         var stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
         var userSessionArgumentCaptor = ArgumentCaptor.forClass(User.class);
         doNothing().when(session).setAttribute(stringArgumentCaptor.capture(), userSessionArgumentCaptor.capture());
@@ -78,13 +79,15 @@ class UserControllerTest {
     @Test
     void whenRegisterUnSuccessfulThenGetErrorPageAndClearSessionAttribute() {
         var user = new User(0, "testLogin", "testPassword", "testName");
-        when(userService.save(any(User.class))).thenReturn(false);
+        when(userService.save(any(User.class))).thenThrow(
+                new ConstraintViolationException("", null, ""));
         var model = new ConcurrentModel();
 
         var actualResponse = userController.register(model, user, session);
 
         assertThat(actualResponse).isEqualTo("errors/404");
-        assertThat(model).hasFieldOrPropertyWithValue("message", "Пользователь с таким логином уже существует");
+        assertThat(model).hasFieldOrPropertyWithValue("message",
+                "Ошибка при регистрации пользователя: Пользователь с таким логином уже существует");
         assertThat(model.containsAttribute("user")).isFalse();
     }
 

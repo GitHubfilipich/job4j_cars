@@ -73,8 +73,10 @@ public class CrudRepository {
     }
 
     public <T> T tx(Function<Session, T> command) {
+        Session session = null;
         Transaction transaction = null;
-        try (Session session = sf.openSession()) {
+        try {
+            session = sf.openSession();
             transaction = session.beginTransaction();
             T rsl = command.apply(session);
             transaction.commit();
@@ -84,6 +86,10 @@ public class CrudRepository {
                 transaction.rollback();
             }
             throw e;
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
         }
     }
 }

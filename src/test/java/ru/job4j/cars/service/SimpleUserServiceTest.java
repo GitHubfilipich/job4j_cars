@@ -36,7 +36,7 @@ class SimpleUserServiceTest {
 
         var result = userService.save(user);
 
-        assertThat(result).isTrue();
+        assertThat(result).isEqualTo(user);
     }
 
     /**
@@ -49,7 +49,7 @@ class SimpleUserServiceTest {
 
         var result = userService.save(user);
 
-        assertThat(result).isFalse();
+        assertThat(result).isNull();
     }
 
     /**

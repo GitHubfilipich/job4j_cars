@@ -1,5 +1,6 @@
 package ru.job4j.cars.controller;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,14 +32,27 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(Model model, @ModelAttribute User user, HttpSession session) {
-        var isSaved = userService.save(user);
-        if (!isSaved) {
-            model.addAttribute("message", "Пользователь с таким логином уже существует");
+        try {
+            userService.save(user);
+        } catch (Exception e) {
+            String message = isConstraintViolation(e) ? "Пользователь с таким логином уже существует" : e.getMessage();
+            model.addAttribute("message", "Ошибка при регистрации пользователя: " + message);
             model.addAttribute("user", null);
             return "errors/404";
         }
         session.setAttribute("user", user);
         return "redirect:/";
+    }
+
+    private boolean isConstraintViolation(Throwable e) {
+        Throwable t = e;
+        while (t != null) {
+            if (t instanceof ConstraintViolationException) {
+                return true;
+            }
+            t = t.getCause();
+        }
+        return false;
     }
 
     @GetMapping("/login")
